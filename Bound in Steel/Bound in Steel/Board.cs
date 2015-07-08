@@ -70,7 +70,12 @@ namespace Bound_in_Steel
             while (fScoreQueue.Count() != 0)
             {
                 Coordinate current = fScoreQueue.Dequeue();
-                Console.Out.WriteLine("Current = " + current);
+                Console.Out.WriteLine("");
+                Console.Out.WriteLine("Current = " + current.ToString());
+                Console.Out.WriteLine("Visited = " + visited.ToString());
+                Console.Out.WriteLine("Parents = " + parents.ToString());
+                Console.Out.WriteLine("gScore = " + gScore.ToString());
+                Console.Out.WriteLine("fScoreQueue = " + fScoreQueue.ToString());
                 if (current == goal)
                 {
                     return ReconstructPath(parents, goal);
