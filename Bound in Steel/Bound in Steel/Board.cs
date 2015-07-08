@@ -75,6 +75,10 @@ namespace Bound_in_Steel
                 }
 
                 visited.Add(start);
+                foreach (Coordinate neighbor in board[current.row,current.col].GetNeighborCoordinates())
+                {
+
+                }
                 
 
             }
