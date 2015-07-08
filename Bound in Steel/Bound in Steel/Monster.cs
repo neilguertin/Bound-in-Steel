@@ -10,7 +10,7 @@ namespace Bound_in_Steel
     {
         public readonly string name;
         public readonly char icon;
-
+        
         public Monster(string name, char icon)
         {
             this.name = name;

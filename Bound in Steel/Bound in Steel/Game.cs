@@ -13,10 +13,14 @@ namespace Bound_in_Steel
             Board board = new Board(6, 6);
             Monster human = new Monster("Human", 'h');
             Monster dog = new Monster("Dog", 'd');
-            board.AddMonster(new Coordinate(1, 1), human);
-            board.AddMonster(new Coordinate(4, 4), dog);
+            Coordinate humanLoc = new Coordinate(1, 1);
+            Coordinate dogLoc = new Coordinate(4, 4);
+            board.AddMonster(humanLoc, human);
+            board.AddMonster(dogLoc, dog);
             Console.Out.WriteLine(board);
-
+            Console.Out.WriteLine("Shortest path from 1,1 to 4,4:");
+            List<Coordinate> path = board.GetShortestPath(humanLoc, dogLoc);
+            Console.Out.WriteLine(path);
 
             Console.Read();
         }
