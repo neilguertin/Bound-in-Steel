@@ -67,10 +67,26 @@ namespace Bound_in_Steel
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    if (r > 0) board[r, c].AddNeighbor(board[r - 1, c]);
-                    if (r < rows - 1) board[r, c].AddNeighbor(board[r + 1, c]);
-                    if (c > 0) board[r, c].AddNeighbor(board[r, c - 1]);
-                    if (c < cols - 1) board[r, c].AddNeighbor(board[r, c + 1]);
+                    if (r > 0)
+                    {
+                        Square neighbor = board[r - 1, c];
+                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                    }
+                    if (r < rows - 1)
+                    {
+                        Square neighbor = board[r + 1, c];
+                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                    }
+                    if (c > 0)
+                    {
+                        Square neighbor = board[r, c - 1];
+                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                    }
+                    if (c < cols - 1)
+                    {
+                        Square neighbor = board[r, c+ 1];
+                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                    }
                 }
             }
 

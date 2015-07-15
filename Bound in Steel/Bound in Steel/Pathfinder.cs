@@ -21,10 +21,10 @@ namespace Bound_in_Steel
             while (fScoreQueue.Count() != 0)
             {
                 Coordinate current = fScoreQueue.Dequeue();
-                Console.Out.WriteLine("Current = " + current.ToString());
+                //Console.WriteLine("Current = " + current.ToString());
                 if (current.Equals(goal))
                 {
-                    Console.Out.WriteLine("FOUND GOAL!!!");
+                    Console.WriteLine("FOUND GOAL!!!");
                     return ReconstructPath(parents, goal);
                 }
 
