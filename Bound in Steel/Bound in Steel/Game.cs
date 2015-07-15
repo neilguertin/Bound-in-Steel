@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Bound_in_Steel
 {
     class Game
     {
         static void Main(string[] args)
+        {
+            //TestPathFind();
+            TestFileRead();
+            Console.Read();
+        }
+
+        static void TestPathFind()
         {
             Board board = new Board(6, 6);
             Monster human = new Monster("Human", 'h');
@@ -20,9 +28,17 @@ namespace Bound_in_Steel
             Console.Out.WriteLine(board);
             Console.Out.WriteLine("Shortest path from 1,1 to 4,4:");
             List<Coordinate> path = board.GetShortestPath(humanLoc, dogLoc);
-            Console.Out.WriteLine(path);
+            foreach (Coordinate coord in path)
+            {
+                Console.WriteLine(coord);
+            }
+        }
 
-            Console.Read();
+        static void TestFileRead()
+        {
+            string filename = "Resources\\Boards\\15x15H.txt";
+            Board board = new Board(filename);
+            Console.Out.WriteLine(board);
         }
     }
 }

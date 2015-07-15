@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Priority_Queue;
+using System.IO;
 
 namespace Bound_in_Steel
 {
@@ -37,9 +38,48 @@ namespace Bound_in_Steel
             }
         }
 
+        public Board(string filename)
+        {
+            TextReader tr = new StreamReader(filename);
+            rows = int.Parse(tr.ReadLine());
+            cols = int.Parse(tr.ReadLine());
+            board = new Square[rows, cols];
+            string line;
+            int row = 0;
+            while ((line = tr.ReadLine()) != null)
+            {
+                int col= 0;
+                foreach (char ch in line.Trim())
+                {
+                    Square square = new Square(new Coordinate(row, col));
+                    board[row, col] = square;
+                    if (ch == '#')
+                    {
+                        square.AddMonster(new Monster("Wall", '#'));
+                    }
+                    col++;
+                }
+                row++;
+                cols = col;
+            }
+            rows = row;
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    if (r > 0) board[r, c].AddNeighbor(board[r - 1, c]);
+                    if (r < rows - 1) board[r, c].AddNeighbor(board[r + 1, c]);
+                    if (c > 0) board[r, c].AddNeighbor(board[r, c - 1]);
+                    if (c < cols - 1) board[r, c].AddNeighbor(board[r, c + 1]);
+                }
+            }
+
+            tr.Close();
+        }
+
         public void AddMonster(Coordinate c, Monster monster)
         {
-            Square square = board[c.row, c.col];
+            Square square = GetSquare(c);
             if (!square.HasMonster()) square.AddMonster(monster);
         }
 
@@ -51,7 +91,6 @@ namespace Bound_in_Steel
                 for (int c = 0; c < cols; c++)
                 {
                     result += board[r, c].ToString();
-                    result += " ";
                 }
                 result += "\n";
             }
@@ -60,73 +99,22 @@ namespace Bound_in_Steel
 
         public List<Coordinate> GetShortestPath(Coordinate start, Coordinate goal)
         {
-            HashSet<Coordinate> visited = new HashSet<Coordinate>();
-            Dictionary<Coordinate, Coordinate> parents = new Dictionary<Coordinate, Coordinate>();
-            Dictionary<Coordinate, double> gScore = new Dictionary<Coordinate, double>();
-            HeapPriorityQueue<Coordinate> fScoreQueue = new HeapPriorityQueue<Coordinate>(rows * cols);
-            parents[start] = start;
-            gScore.Add(start, 0);
-            fScoreQueue.Enqueue(start, gScore[start] + Heuristic(start, goal));
-            while (fScoreQueue.Count() != 0)
-            {
-                Coordinate current = fScoreQueue.Dequeue();
-                Console.Out.WriteLine("");
-                Console.Out.WriteLine("Current = " + current.ToString());
-                Console.Out.WriteLine("Visited = " + visited.ToString());
-                Console.Out.WriteLine("Parents = " + parents.ToString());
-                Console.Out.WriteLine("gScore = " + gScore.ToString());
-                Console.Out.WriteLine("fScoreQueue = " + fScoreQueue.ToString());
-                if (current == goal)
-                {
-                    return ReconstructPath(parents, goal);
-                }
-
-                visited.Add(start);
-                foreach (Coordinate neighbor in board[current.row,current.col].GetNeighborCoordinates())
-                {   
-                    if (visited.Contains(neighbor)) continue;
-                    double newGScore = gScore[current] + Distance(current, neighbor);
-                    if (!fScoreQueue.Contains(neighbor))
-                    {
-                        parents[neighbor] = current;
-                        gScore[neighbor] = newGScore;
-                        fScoreQueue.Enqueue(neighbor, newGScore + Heuristic(neighbor, goal));
-                    }
-                    else if (newGScore < gScore[neighbor])
-                    {
-                        parents[neighbor] = current;
-                        gScore[neighbor] = newGScore;
-                        fScoreQueue.UpdatePriority(neighbor, newGScore + Heuristic(neighbor, goal));
-                    }
-
-                }
-            }
-
-            return null;
+            return Pathfinder.GetShortestPath(this, start, goal);
         }
 
-        public List<Coordinate> ReconstructPath(Dictionary<Coordinate,Coordinate> parents, Coordinate goal)
+        public List<Coordinate> GetNeighbors(Coordinate coordinate)
         {
-            List<Coordinate> path = new List<Coordinate>();
-            path.Add(goal);
-            Coordinate current = goal;
-            while (!parents[current].Equals(current))
-            {
-                current = parents[current];
-                path.Add(current);
-            }
-            return path;
-
+            return GetSquare(coordinate).GetNeighborCoordinates();
         }
 
-        public double Heuristic(Coordinate start, Coordinate goal)
+        public int MaxSize()
         {
-            return Math.Sqrt((goal.row - start.row)^2 + (goal.col - start.col)^2);
+            return rows * cols;
         }
 
-        public double Distance(Coordinate start, Coordinate goal)
+        public Square GetSquare(Coordinate c)
         {
-            return Math.Abs(goal.row - start.row) + Math.Abs(goal.col - start.col);
+            return board[c.row, c.col];
         }
     }
 }
