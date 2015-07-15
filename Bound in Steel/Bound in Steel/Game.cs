@@ -55,7 +55,20 @@ namespace Bound_in_Steel
             board = new Board(filename);
             Console.WriteLine(board);
             start = new Coordinate(15, 1);
-            end = new Coordinate(15,14);
+            end = new Coordinate(15, 14);
+            path = board.GetShortestPath(start, end);
+            foreach (Coordinate coord in path)
+            {
+                Console.WriteLine(coord);
+                board.AddMonster(coord, new Monster("Path", '*'));
+            }
+
+            Console.WriteLine(board);
+            filename = "Resources\\Boards\\maze.txt";
+            board = new Board(filename);
+            Console.WriteLine(board);
+            start = new Coordinate(0, 5);
+            end = new Coordinate(12,7);
             path = board.GetShortestPath(start, end);
             foreach (Coordinate coord in path)
             {
