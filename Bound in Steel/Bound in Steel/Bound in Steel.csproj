@@ -44,6 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Creature.cs" />
+    <Compile Include="Human.cs" />
+    <Compile Include="Humanoid.cs" />
+    <Compile Include="MapElement.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="Pathfinder.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -55,6 +61,10 @@
     <Compile Include="Coordinate.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Treasure.cs" />
+    <Compile Include="Wall.cs" />
+    <Compile Include="Water.cs" />
+    <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
