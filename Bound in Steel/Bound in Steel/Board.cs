@@ -53,9 +53,9 @@ namespace Bound_in_Steel
                 {
                     Square square = new Square(new Coordinate(row, col));
                     board[row, col] = square;
-                    if (ch == '#')
+                    if (ch == 'X')
                     {
-                        square.AddMonster(new Monster("Wall", '#'));
+                        square.AddMonster(new Monster("Wall", 'X'));
                     }
                     col++;
                 }
