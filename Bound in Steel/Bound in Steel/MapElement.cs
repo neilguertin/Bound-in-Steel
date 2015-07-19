@@ -9,9 +9,9 @@ namespace Bound_in_Steel
     abstract class MapElement : Entity
     {
         protected bool traversable;
+        protected int distance;
         public MapElement(Coordinate coordinate, char icon) : base(coordinate, icon)
         {
-
         }
         public bool IsTraversable()
         {

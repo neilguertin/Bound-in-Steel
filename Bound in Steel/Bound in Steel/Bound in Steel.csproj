@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Creature.cs" />
+    <Compile Include="DeepWater.cs" />
     <Compile Include="Human.cs" />
     <Compile Include="Humanoid.cs" />
     <Compile Include="MapElement.cs" />
@@ -77,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Boards\15x15H.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Boards\45x45 Dungeon.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Boards\8x8.txt">
