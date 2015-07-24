@@ -33,6 +33,7 @@ namespace Bound_in_Steel
                 foreach (Coordinate neighbor in neighbors)
                 {
                     if (visited.Contains(neighbor)) continue;
+                    if (!board.GetSquare(neighbor).IsTraversable()) continue;
                     double newGScore = gScore[current] + Distance(current, neighbor);
                     if (!fScoreQueue.Contains(neighbor))
                     {

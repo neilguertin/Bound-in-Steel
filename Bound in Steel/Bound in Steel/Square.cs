@@ -10,29 +10,39 @@ namespace Bound_in_Steel
     {
         public readonly Coordinate coordinate;
         private List<Square> neighbors;
-        private Monster occupant;
+        private MapElement element;
+        private Creature creature;
+        private List<Item> items;
 
-        public Square(Coordinate c)
+        public Square(Coordinate c, MapElement element)
         {
             this.coordinate = c;
             neighbors = new List<Square>();
+            this.element = element;
+            items = new List<Item>();
         }
 
-        public void AddMonster(Monster monster)
+        public void AddCreature(Creature creature)
         {
-            // TODO: Error handling or return value to indicate failure
-            occupant = monster;
+            if (this.creature != null)
+            {
+                throw new SquareOccupiedException(creature, this.creature, coordinate);
+            }
+            this.creature = creature;
         }
 
-        public bool HasMonster()
+        public bool HasCreature()
         {
-            return occupant != null;
+            return creature != null;
         }
 
         public void AddNeighbor(Square neighbor)
         {
             // TODO: Error handling on neighbor already exists in list
-            neighbors.Add(neighbor);
+            if (!neighbors.Contains(neighbor))
+            {
+                neighbors.Add(neighbor);
+            }
         }
 
         public List<Square> GetNeighbors()
@@ -50,10 +60,31 @@ namespace Bound_in_Steel
             return neighborCoords;
         }
 
+        public char GetIcon()
+        {
+            return HasCreature() ? creature.GetIcon() :
+                    HasItem()? items[0].GetIcon() :
+                        element.GetIcon();
+        }
+
         public override string ToString()
         {
-            //return "[" + location.row + ", " + location.col + "]";
-            return HasMonster() ? ""+occupant.icon : ".";
+            return "[" + coordinate.row + ", " + coordinate.col + "]";
+        }
+
+        public bool IsTraversable()
+        {
+            return element.IsTraversable();
+        }
+
+        public void AddItem(Item item)
+        {
+            items.Add(item);
+        }
+
+        public bool HasItem()
+        {
+            return items.Count != 0;
         }
     }
 }

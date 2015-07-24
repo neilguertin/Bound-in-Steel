@@ -9,11 +9,16 @@ namespace Bound_in_Steel
     abstract class Entity
     {
         private Coordinate coordinate;
-        private char icon;
+        protected char icon;
         public Entity(Coordinate coordinate, char icon)
         {
             this.coordinate = coordinate;
             this.icon = icon;
+        }
+
+        public char GetIcon()
+        {
+            return icon;
         }
     }
 }

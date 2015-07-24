@@ -16,15 +16,16 @@ namespace Bound_in_Steel
             Console.Read();
         }
 
+        /*
         static void TestPathFind()
         {
             Board board = new Board(6, 6);
-            Monster human = new Monster("Human", 'h');
-            Monster dog = new Monster("Dog", 'd');
             Coordinate humanLoc = new Coordinate(1, 1);
             Coordinate dogLoc = new Coordinate(4, 4);
-            board.AddMonster(humanLoc, human);
-            board.AddMonster(dogLoc, dog);
+            Creature human = new Creature(humanLoc, 'h');
+            Creature dog = new Creature(dogLoc, 'd');
+            board.AddCreature(humanLoc, human);
+            board.AddCreature(dogLoc, dog);
             Console.WriteLine(board);
             Console.WriteLine("Shortest path from 1,1 to 4,4:");
             List<Coordinate> path = board.GetShortestPath(humanLoc, dogLoc);
@@ -35,6 +36,7 @@ namespace Bound_in_Steel
             }
             Console.WriteLine(board);
         }
+        */
         
         static void TestFileRead()
         {
@@ -47,7 +49,7 @@ namespace Bound_in_Steel
             foreach (Coordinate coord in path)
             {
                 Console.WriteLine(coord);
-                board.AddMonster(coord, new Monster("Path", '*'));
+                board.AddItem(coord, new Path(coord));
             }
             Console.WriteLine(board);
 
@@ -60,7 +62,7 @@ namespace Bound_in_Steel
             foreach (Coordinate coord in path)
             {
                 Console.WriteLine(coord);
-                board.AddMonster(coord, new Monster("Path", '*'));
+                board.AddItem(coord, new Path(coord));
             }
 
             Console.WriteLine(board);
@@ -73,7 +75,7 @@ namespace Bound_in_Steel
             foreach (Coordinate coord in path)
             {
                 Console.WriteLine(coord);
-                board.AddMonster(coord, new Monster("Path", '*'));
+                board.AddItem(coord, new Path(coord));
             }
             Console.WriteLine(board);
         }
