@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bound_in_Steel
 {
-    class DeepWater : MapElement
+    class Floor : MapElement
     {
-        public DeepWater(Coordinate coordinate) : base(coordinate, 'V')
+        public Floor(Coordinate coordinate) : base(coordinate, '.')
         {
-            this.traversable = false;
+            this.traversable = true;
         }
     }
 }

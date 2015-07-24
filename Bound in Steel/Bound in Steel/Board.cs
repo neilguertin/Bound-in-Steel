@@ -23,7 +23,8 @@ namespace Bound_in_Steel
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    board[r, c] = new Square(new Coordinate(r, c));
+                    Coordinate coordinate = new Coordinate(r, c);
+                    board[r, c] = new Square(coordinate, new Wall(coordinate));
                 }
             }
             for (int r = 0; r < rows; r++)
@@ -51,12 +52,26 @@ namespace Bound_in_Steel
                 int col= 0;
                 foreach (char ch in line.Trim())
                 {
-                    Square square = new Square(new Coordinate(row, col));
-                    board[row, col] = square;
-                    if (ch == 'X')
+                    Coordinate coordinate = new Coordinate(row, col);
+                    MapElement element;
+                    switch (ch)
                     {
-                        square.AddMonster(new Monster("Wall", 'X'));
+
+                        case 'X':
+                            element = new Wall(coordinate);
+                            break;
+                        case '~':
+                            element = new Water(coordinate);
+                            break;
+                        case '.':
+                            element = new Floor(coordinate);
+                            break;
+                        default:
+                            element = new Floor(coordinate);
+                            break;
                     }
+                    Square square = new Square(coordinate, element);
+                    board[row, col] = square;
                     col++;
                 }
                 row++;
@@ -70,22 +85,22 @@ namespace Bound_in_Steel
                     if (r > 0)
                     {
                         Square neighbor = board[r - 1, c];
-                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                        board[r, c].AddNeighbor(neighbor);
                     }
                     if (r < rows - 1)
                     {
                         Square neighbor = board[r + 1, c];
-                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                        board[r, c].AddNeighbor(neighbor);
                     }
                     if (c > 0)
                     {
                         Square neighbor = board[r, c - 1];
-                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                        board[r, c].AddNeighbor(neighbor);
                     }
                     if (c < cols - 1)
                     {
                         Square neighbor = board[r, c+ 1];
-                        if (!neighbor.HasMonster()) board[r, c].AddNeighbor(neighbor);
+                        board[r, c].AddNeighbor(neighbor);
                     }
                 }
             }
@@ -93,10 +108,10 @@ namespace Bound_in_Steel
             tr.Close();
         }
 
-        public void AddMonster(Coordinate c, Monster monster)
+        public void AddCreature(Coordinate c, Creature creature)
         {
             Square square = GetSquare(c);
-            if (!square.HasMonster()) square.AddMonster(monster);
+            if (!square.HasCreature()) square.AddCreature(creature);
         }
 
         public override string ToString()
@@ -106,7 +121,7 @@ namespace Bound_in_Steel
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    result += board[r, c].ToString();
+                    result += board[r, c].GetIcon();
                 }
                 result += "\n";
             }
@@ -131,6 +146,11 @@ namespace Bound_in_Steel
         public Square GetSquare(Coordinate c)
         {
             return board[c.row, c.col];
+        }
+
+        public void AddItem(Coordinate coordinate, Item item)
+        {
+            GetSquare(coordinate).AddItem(item);
         }
     }
 }
