@@ -11,6 +11,7 @@ namespace Bound_in_Steel
         public Floor(Coordinate coordinate) : base(coordinate, '.')
         {
             this.traversable = true;
+            this.distance = 1;
         }
     }
 }

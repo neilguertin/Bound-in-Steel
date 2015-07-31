@@ -83,6 +83,12 @@
     <Content Include="Resources\Boards\15x15H.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Boards\30_30_Lake.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Boards\30_30_Lake2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Boards\45x45 Dungeon.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
